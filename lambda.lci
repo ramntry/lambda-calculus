@@ -1,5 +1,10 @@
-Tru = \x.\y.x;
-Fls = \x.\y.y;
+Kcb = \x.\y.x;
+Scb = \x.\y.\z.x z (y z);
+Icb = Scb Kcb Kcb;
+
+Tru = Kcb;
+Fls = Kcb Icb;
+
 And = \x.\y.x y Fls;
 Lor = \x.\y.x Tru y;
 Not = \x.x Fls Tru;
@@ -7,6 +12,7 @@ Not = \x.x Fls Tru;
 Zro = \f.\x.x;
 Inc = \n.\f.\x.f (n f x);
 One = Inc Zro;
+Two = Inc One;
 Add = \n.\m.\f.\x.n f (m f x);
 Mul = \n.\m.\f.n (m f);
 Pow = \b.\k.k b;
@@ -18,6 +24,11 @@ Ycb = \f.(\x.f (x x)) \x.f (x x);
 Fct = Ycb (\f.\n.Isz n One (Mul (f (Dec n)) n));
 Fib = \n.(Ycb (\f.\n.\a.\b.Isz n a (f (Dec n) b (Add a b)))) n Zro One;
 
+Com = \f.\g.\x.f (g x);
+Cmn = \c.\f.\g.\y.c f (g y);
+Cm2 = Cmn Com;
+Rea = \f.\x.\y.f y x;
+
 Mkp = \a.\b.\s.s a b;
 Fst = \p.p Tru;
 Snd = \p.p Fls;
@@ -25,8 +36,17 @@ Nll = \s.Tru;
 Isn = \l.l (\x.\y.Fls);
 Gen = \s.(Ycb (\f.\n.\a.Isz n a (f (Dec n) (Mkp n a)))) s Nll;
 
+Dim = \n.\d.(Ycb (\f.\r.\a.Lss r d (Mkp a r) (f (Sub r d) (Inc a)))) n Zro;
+Div = Cm2 Fst Dim;
+Mod = Cm2 Snd Dim;
+Evn = Com Isz (Rea Mod Two);
+Odd = Com Not Evn;
+
 Flr = Ycb (\f.\s.\z.\l.Isn l z (s (Fst l) (f s z (Snd l))));
 Ref = \f.\l.Flr (\x.\a.Mkp (f x) a) Nll l;
+Fil = \f.\l.Flr (\x.\a.f x (Mkp x a) a) Nll l;
+Fl2 = \f.\l.Flr (\x.\a.f x (Mkp (Mkp x (Fst a)) (Snd a)) (Mkp (Fst a) (Mkp x (Snd a)))) (Mkp Nll Nll) l;
+Len = Flr (\x.\a.Inc a) Zro;
 
 Eql = \a.\b.And (Isz (Sub a b)) (Isz (Sub b a));
 Neq = \a.\b.Not (Eql a b);
@@ -34,3 +54,13 @@ Grt = \a.\b.Not (Isz (Sub a b));
 Lss = \a.\b.Not (Isz (Sub b a));
 Gre = \a.\b.Isz (Sub b a);
 Lse = \a.\b.Isz (Sub a b);
+Mn2 = \a.\b.(Lse a b) a b;
+Mx2 = \a.\b.(Gre a b) a b;
+
+Srb = \c.\l.(Ycb (\f.\l.\a.Isn l a ((\p.f (Fst p) (Mkp (Fst l) (f (Snd p) a))) (Fl2 (c (Fst l)) (Snd l))))) l Nll;
+Srt = Srb Gre;
+Min = Com Fst Srt;
+Max = Com Fst (Srb Lse);
+
+Fll = \s.\z.\l.Flr (\x.\a.\i.a (s i x)) Icb l z;
+Rev = Fll (Rea Mkp) Nll;
