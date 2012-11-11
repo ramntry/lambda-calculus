@@ -1,0 +1,36 @@
+Tru = \x.\y.x;
+Fls = \x.\y.y;
+And = \x.\y.x y Fls;
+Lor = \x.\y.x Tru y;
+Not = \x.x Fls Tru;
+
+Zro = \f.\x.x;
+Inc = \n.\f.\x.f (n f x);
+One = Inc Zro;
+Add = \n.\m.\f.\x.n f (m f x);
+Mul = \n.\m.\f.n (m f);
+Pow = \b.\k.k b;
+Dec = \n.\f.\x.n (\g.\h.h (g f)) (\u.x) (\u.u);
+Sub = \n.\m.m Dec n;
+
+Isz = \n.n (\x.Fls) Tru;
+Ycb = \f.(\x.f (x x)) \x.f (x x);
+Fct = Ycb (\f.\n.Isz n One (Mul (f (Dec n)) n));
+Fib = \n.(Ycb (\f.\n.\a.\b.Isz n a (f (Dec n) b (Add a b)))) n Zro One;
+
+Mkp = \a.\b.\s.s a b;
+Fst = \p.p Tru;
+Snd = \p.p Fls;
+Nll = \s.Tru;
+Isn = \l.l (\x.\y.Fls);
+Gen = \s.(Ycb (\f.\n.\a.Isz n a (f (Dec n) (Mkp n a)))) s Nll;
+
+Flr = Ycb (\f.\s.\z.\l.Isn l z (s (Fst l) (f s z (Snd l))));
+Ref = \f.\l.Flr (\x.\a.Mkp (f x) a) Nll l;
+
+Eql = \a.\b.And (Isz (Sub a b)) (Isz (Sub b a));
+Neq = \a.\b.Not (Eql a b);
+Grt = \a.\b.Not (Isz (Sub a b));
+Lss = \a.\b.Not (Isz (Sub b a));
+Gre = \a.\b.Isz (Sub b a);
+Lse = \a.\b.Isz (Sub a b);
