@@ -24,6 +24,7 @@ Ycb = \f.(\x.f (x x)) \x.f (x x);
 Fct = Ycb (\f.\n.Isz n One (Mul (f (Dec n)) n));
 Fib = \n.(Ycb (\f.\n.\a.\b.Isz n a (f (Dec n) b (Add a b)))) n Zro One;
 
+
 Com = \f.\g.\x.f (g x);
 Cmn = \c.\f.\g.\y.c f (g y);
 Cm2 = Cmn Com;
@@ -54,6 +55,7 @@ Grt = \a.\b.Not (Isz (Sub a b));
 Lss = \a.\b.Not (Isz (Sub b a));
 Gre = \a.\b.Isz (Sub b a);
 Lse = \a.\b.Isz (Sub a b);
+
 Mn2 = \a.\b.(Lse a b) a b;
 Mx2 = \a.\b.(Gre a b) a b;
 
