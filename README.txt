@@ -38,8 +38,8 @@ Isn - тестирование на Nil [(a:b) -> Fls; Nil -> Tru]
 Gen - генератор списка чисел Чёрча от 1 до n включительно [Number -> [Number]] (где [a] есть a:(a:(...(a:Nil)...)))
 
 Dim - деление с остатком [Number -> Number -> (Number:Number)] (где первый элемент пары-результата - частное, второй - остаток)
-Div - целочисленное частное [Number -> Number]
-Mod - остаток от деления [Number -> Number]
+Div - целочисленное частное [Number -> Number -> Number]
+Mod - остаток от деления [Number -> Number -> Number]
 Evn - тестирование на четность [Number -> Bool]
 Odd - тестирование на нечетность [Number -> Bool]
 
